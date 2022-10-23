@@ -9,16 +9,19 @@
  <div *ngFor="let item of passwords" class="row">
   <div>Title: {{item.title}}</div>
   <div>Password: {{item.password}}</div>
-  <div></div>
+  <div>
+    <button (click)="deletePassword(item.id)" class="buttonActions">Delete</button>
+    <button (click)="editPassword(item)" class="buttonActions">Edit</button>
+  </div>
 </div>
 
 </div>
 <div class="box">
-  <h2>add Password</h2>
+  <div class="editRow"><h2>edit Password</h2> <button>Add Password</button></div>
   <div class="container">
     <label>Id: {{passwordtoadd.id}} </label>
     <input type="text" [(ngModel)]="passwordtoadd.title" placeholder="title" />
     <input type="text" [(ngModel)]="passwordtoadd.password" placeholder="password" />
-    <button (click)="addpassword(passwordtoadd)">save Password</button>
+    <button (click)="savePassword(passwordtoadd)">save Password</button>
   </div>
 </div>

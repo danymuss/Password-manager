@@ -9,19 +9,29 @@ import { Password } from './password.model';
 })
 export class AppComponent {
   title = 'Passwort-Manager';
-  passwords:Password[]=[];
-  passwordtoadd:Password= new Password;
+  passwords: Password[] = [];
+  passwordtoadd: Password = new Password;
 
-  constructor(private ds: DataService) {}
+  constructor(private ds: DataService) { }
 
   ngOnInit() {
-  this.ds.getPasswords().subscribe((data: any) => {
-    this.passwords = data;
-  });
-}
+    this.ds.getPasswords().subscribe((data) => {
+      this.passwords = data;
+    });
+  }
 
-  addpassword(pw: Password){
-    this.passwords.push(pw);
-    this.passwordtoadd= new Password;
+  savePassword(pw: Password) {
+    this.ds.addPassword(pw).subscribe((data: Password) => {
+      this.passwords.push(data);
+      this.passwordtoadd = new Password;
+    });
+  }
+  deletePassword(id:number) {
+    this.ds.deletePassword(id).subscribe(() => {
+      this.passwords = this.passwords.filter((pw) => pw.id !== id);
+    });
+  }
+  editPassword(pw: Password) {
+    this.passwordtoadd = pw;
   }
 }
