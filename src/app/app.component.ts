@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { DataService } from './data.service';
+import { Password } from './password.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'passwort-manager';
+  title = 'Passwort-Manager';
+  passwords:Password[]=[];
+  passwordtoadd:Password= new Password;
+
+  constructor(private ds: DataService) {}
+
+  ngOnInit() {
+  this.ds.getPasswords().subscribe((data: any) => {
+    this.passwords = data;
+  });
+}
+
+  addpassword(pw: Password){
+    this.passwords.push(pw);
+    this.passwordtoadd= new Password;
+  }
 }
