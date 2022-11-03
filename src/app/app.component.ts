@@ -31,8 +31,8 @@ export class AppComponent {
     } else {
       this.ds.updatePassword(pw).subscribe((updated: Password) => {
 
-        let existing = this.passwords.find((p) => p.id == updated.id);
-        existing = { ...updated };
+        let idx = this.passwords.findIndex((p) => p.id == updated.id);
+        this.passwords[idx] = updated;
         this.selectedPassword = null;
       });
     }
@@ -47,7 +47,7 @@ export class AppComponent {
     });
   }
   editPassword(pw: Password) {
-    this.selectedPassword = pw;
+    this.selectedPassword = { ...pw };
   }
 
   addPassword() {
